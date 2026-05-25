@@ -2,7 +2,7 @@
 
 A step-by-step guide to bootstrap a **3-node Kubernetes cluster** (1 control plane + 2 workers) on Ubuntu 22.04 using `kubeadm`, `containerd`, and `Flannel` as the CNI.
 
-This is intended as a learning / lab setup. Each step includes verification commands so you can confirm things are healthy before moving on.
+This is intended as a learning/lab setup. Each step includes verification commands so you can confirm things are healthy before moving on.
 
 ---
 
@@ -43,7 +43,9 @@ Before you begin, make sure you have:
 - **3 × Ubuntu 22.04 LTS** machines (bare-metal or VMs)
 - Each machine with at least **2 CPUs and 2 GB RAM** (control plane should ideally have 2+ GB)
 - **Unique hostname, MAC address, and product_uuid** for every node
-- **Full network connectivity** between all nodes (no firewall blocking the [required ports](https://kubernetes.io/docs/reference/networking/ports-and-protocols/))
+- **Full network connectivity** between all nodes (no firewall blocking the [required ports]
+- **DNS server reachability and successful resolution from all the nodes(control plane and worker nodes)
+- (https://kubernetes.io/docs/reference/networking/ports-and-protocols/))
 - A user with **`sudo` privileges** on every node
 - **Internet access** to pull packages and container images
 
