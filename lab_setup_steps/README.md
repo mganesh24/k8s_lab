@@ -219,6 +219,13 @@ mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
+Also, configure kubectl access for the root user.
+
+```bash
+sudo mkdir -p /root/.kube
+sudo cp /home/user/.kube/config /root/.kube/config
+sudo chown root:root /root/.kube/config
+```
 
 **Verify:**
 
