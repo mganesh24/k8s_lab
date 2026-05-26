@@ -1,0 +1,359 @@
+<svg viewBox="0 0 1280 1400" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569"/>
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#16a34a"/>
+    </marker>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9333ea"/>
+    </marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d97706"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="640" y="32" text-anchor="middle" font-size="22" font-weight="700" fill="#0f172a">End-to-End Pod Creation Flow</text>
+  <text x="640" y="54" text-anchor="middle" font-size="12" fill="#64748b">From kubectl submission to Running &amp; Ready — five phases</text>
+
+  <!-- ============================================ -->
+  <!-- PHASE 1: Client -> API Server                 -->
+  <!-- ============================================ -->
+  <g>
+    <rect x="30" y="80" width="1220" height="240" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+    <rect x="30" y="80" width="200" height="30" rx="14" fill="#2563eb"/>
+    <text x="50" y="101" font-size="13" font-weight="700" fill="#ffffff">PHASE 1 — Client → API Server</text>
+
+    <!-- Step 1: kubectl -->
+    <rect x="50" y="130" width="180" height="170" rx="8" fill="#ffffff" stroke="#2563eb"/>
+    <circle cx="68" cy="148" r="11" fill="#2563eb"/>
+    <text x="68" y="152" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">1</text>
+    <text x="85" y="152" font-size="12" font-weight="700" fill="#1e3a8a">kubectl submit</text>
+    <text x="60" y="172" font-size="10" fill="#334155">kubectl run / apply</text>
+    <text x="60" y="186" font-size="10" fill="#334155">Reads kubeconfig,</text>
+    <text x="60" y="200" font-size="10" fill="#334155">picks context</text>
+    <text x="60" y="220" font-size="10" font-weight="600" fill="#475569">POST</text>
+    <text x="60" y="234" font-size="9" fill="#64748b">/api/v1/namespaces/</text>
+    <text x="60" y="246" font-size="9" fill="#64748b">&lt;ns&gt;/pods</text>
+
+    <!-- Step 2: AuthN -->
+    <rect x="250" y="130" width="180" height="170" rx="8" fill="#ffffff" stroke="#2563eb"/>
+    <circle cx="268" cy="148" r="11" fill="#2563eb"/>
+    <text x="268" y="152" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">2</text>
+    <text x="285" y="152" font-size="12" font-weight="700" fill="#1e3a8a">Authenticate</text>
+    <text x="260" y="172" font-size="10" fill="#334155">Who are you?</text>
+    <text x="260" y="192" font-size="10" fill="#334155">• client cert</text>
+    <text x="260" y="206" font-size="10" fill="#334155">• bearer token</text>
+    <text x="260" y="220" font-size="10" fill="#334155">• OIDC</text>
+    <text x="260" y="234" font-size="10" fill="#334155">• webhook</text>
+
+    <!-- Step 3: AuthZ -->
+    <rect x="450" y="130" width="180" height="170" rx="8" fill="#ffffff" stroke="#2563eb"/>
+    <circle cx="468" cy="148" r="11" fill="#2563eb"/>
+    <text x="468" y="152" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">3</text>
+    <text x="485" y="152" font-size="12" font-weight="700" fill="#1e3a8a">Authorize</text>
+    <text x="460" y="172" font-size="10" fill="#334155">Are you allowed?</text>
+    <text x="460" y="192" font-size="10" fill="#334155">RBAC checks</text>
+    <text x="460" y="206" font-size="10" fill="#334155">"create pods"</text>
+    <text x="460" y="220" font-size="10" fill="#334155">in this namespace</text>
+
+    <!-- Step 4: Admission -->
+    <rect x="650" y="130" width="320" height="170" rx="8" fill="#ffffff" stroke="#2563eb"/>
+    <circle cx="668" cy="148" r="11" fill="#2563eb"/>
+    <text x="668" y="152" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">4</text>
+    <text x="685" y="152" font-size="12" font-weight="700" fill="#1e3a8a">Admission controllers (2 passes)</text>
+
+    <rect x="660" y="168" width="145" height="120" rx="6" fill="#fef3c7" stroke="#d97706"/>
+    <text x="732" y="184" text-anchor="middle" font-size="10" font-weight="700" fill="#92400e">Mutating</text>
+    <text x="668" y="200" font-size="9" fill="#334155">• fill defaults</text>
+    <text x="668" y="213" font-size="9" fill="#334155">  (restartPolicy,</text>
+    <text x="668" y="225" font-size="9" fill="#334155">   imagePullPolicy)</text>
+    <text x="668" y="240" font-size="9" fill="#334155">• inject sidecars</text>
+    <text x="668" y="253" font-size="9" fill="#334155">• apply LimitRange</text>
+    <text x="668" y="266" font-size="9" fill="#334155">• default SA</text>
+
+    <rect x="815" y="168" width="145" height="120" rx="6" fill="#dcfce7" stroke="#16a34a"/>
+    <text x="887" y="184" text-anchor="middle" font-size="10" font-weight="700" fill="#14532d">Validating</text>
+    <text x="823" y="200" font-size="9" fill="#334155">• schema valid?</text>
+    <text x="823" y="213" font-size="9" fill="#334155">• ResourceQuota</text>
+    <text x="823" y="226" font-size="9" fill="#334155">• PodSecurity</text>
+    <text x="823" y="239" font-size="9" fill="#334155">• webhooks</text>
+    <text x="823" y="252" font-size="9" fill="#334155">  (final say)</text>
+
+    <!-- Step 5: etcd -->
+    <rect x="990" y="130" width="240" height="170" rx="8" fill="#ffffff" stroke="#2563eb"/>
+    <circle cx="1008" cy="148" r="11" fill="#2563eb"/>
+    <text x="1008" y="152" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">5</text>
+    <text x="1025" y="152" font-size="12" font-weight="700" fill="#1e3a8a">Persist to etcd</text>
+    <text x="1000" y="174" font-size="10" fill="#334155">Pod written with:</text>
+    <text x="1000" y="194" font-size="10" font-family="monospace" fill="#1e293b">status.phase: Pending</text>
+    <text x="1000" y="212" font-size="10" font-family="monospace" fill="#1e293b">spec.nodeName: ""</text>
+    <text x="1000" y="234" font-size="10" fill="#334155" font-style="italic">durable source of truth</text>
+    <text x="1000" y="248" font-size="10" fill="#334155" font-style="italic">— everything after</text>
+    <text x="1000" y="262" font-size="10" fill="#334155" font-style="italic">is reconciliation</text>
+
+    <!-- internal arrows -->
+    <line x1="230" y1="215" x2="250" y2="215" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+    <line x1="430" y1="215" x2="450" y2="215" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+    <line x1="630" y1="215" x2="650" y2="215" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+    <line x1="970" y1="215" x2="990" y2="215" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+  </g>
+
+  <!-- Phase 1 -> Phase 2 -->
+  <line x1="640" y1="320" x2="640" y2="350" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="650" y="340" font-size="10" fill="#475569" font-style="italic">scheduler watch fires</text>
+
+  <!-- ============================================ -->
+  <!-- PHASE 2: Scheduling                          -->
+  <!-- ============================================ -->
+  <g>
+    <rect x="30" y="360" width="1220" height="200" rx="14" fill="#f3e8ff" stroke="#9333ea" stroke-width="2"/>
+    <rect x="30" y="360" width="200" height="30" rx="14" fill="#9333ea"/>
+    <text x="50" y="381" font-size="13" font-weight="700" fill="#ffffff">PHASE 2 — Scheduling</text>
+
+    <!-- Step 6: Watch -->
+    <rect x="50" y="410" width="270" height="130" rx="8" fill="#ffffff" stroke="#9333ea"/>
+    <circle cx="68" cy="428" r="11" fill="#9333ea"/>
+    <text x="68" y="432" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">6</text>
+    <text x="85" y="432" font-size="12" font-weight="700" fill="#581c87">kube-scheduler watches</text>
+    <text x="60" y="454" font-size="10" fill="#334155">Holds open watch on pods</text>
+    <text x="60" y="468" font-size="10" fill="#334155">with empty nodeName.</text>
+    <text x="60" y="488" font-size="10" fill="#334155">New pod arrives via</text>
+    <text x="60" y="502" font-size="10" fill="#334155">watch event stream</text>
+    <text x="60" y="522" font-size="10" font-style="italic" fill="#64748b">(no polling)</text>
+
+    <!-- Step 7: Filter -->
+    <rect x="340" y="410" width="270" height="130" rx="8" fill="#ffffff" stroke="#9333ea"/>
+    <circle cx="358" cy="428" r="11" fill="#9333ea"/>
+    <text x="358" y="432" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">7</text>
+    <text x="375" y="432" font-size="12" font-weight="700" fill="#581c87">Filter (predicates)</text>
+    <text x="350" y="452" font-size="10" fill="#334155">Eliminate nodes that can't fit:</text>
+    <text x="350" y="470" font-size="10" fill="#334155">• insufficient CPU/mem</text>
+    <text x="350" y="484" font-size="10" fill="#334155">• taints w/o tolerations</text>
+    <text x="350" y="498" font-size="10" fill="#334155">• nodeSelector / affinity</text>
+    <text x="350" y="512" font-size="10" fill="#334155">• unschedulable / cordoned</text>
+    <text x="350" y="526" font-size="10" fill="#334155">• port conflicts</text>
+
+    <!-- Step 8: Score -->
+    <rect x="630" y="410" width="270" height="130" rx="8" fill="#ffffff" stroke="#9333ea"/>
+    <circle cx="648" cy="428" r="11" fill="#9333ea"/>
+    <text x="648" y="432" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">8</text>
+    <text x="665" y="432" font-size="12" font-weight="700" fill="#581c87">Score (priorities)</text>
+    <text x="640" y="452" font-size="10" fill="#334155">Rank survivors by:</text>
+    <text x="640" y="470" font-size="10" fill="#334155">• resource balance</text>
+    <text x="640" y="484" font-size="10" fill="#334155">• spread across zones</text>
+    <text x="640" y="498" font-size="10" fill="#334155">• image locality (cached?)</text>
+    <text x="640" y="512" font-size="10" fill="#334155">• inter-pod affinity</text>
+
+    <!-- Step 9: Bind -->
+    <rect x="920" y="410" width="310" height="130" rx="8" fill="#ffffff" stroke="#9333ea"/>
+    <circle cx="938" cy="428" r="11" fill="#9333ea"/>
+    <text x="938" y="432" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">9</text>
+    <text x="955" y="432" font-size="12" font-weight="700" fill="#581c87">Bind</text>
+    <text x="930" y="452" font-size="10" fill="#334155">POST Binding object →</text>
+    <text x="930" y="466" font-size="10" fill="#334155">API server patches:</text>
+    <text x="930" y="486" font-size="10" font-family="monospace" fill="#1e293b">spec.nodeName: &lt;node&gt;</text>
+    <text x="930" y="510" font-size="10" fill="#334155" font-style="italic">Pod still Pending —</text>
+    <text x="930" y="524" font-size="10" fill="#334155" font-style="italic">kubelet hasn't seen it yet</text>
+
+    <line x1="320" y1="475" x2="340" y2="475" stroke="#9333ea" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+    <line x1="610" y1="475" x2="630" y2="475" stroke="#9333ea" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+    <line x1="900" y1="475" x2="920" y2="475" stroke="#9333ea" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+  </g>
+
+  <!-- Phase 2 -> Phase 3 -->
+  <line x1="640" y1="560" x2="640" y2="590" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="650" y="580" font-size="10" fill="#475569" font-style="italic">kubelet watch fires on bound pod</text>
+
+  <!-- ============================================ -->
+  <!-- PHASE 3: Kubelet picks it up                  -->
+  <!-- ============================================ -->
+  <g>
+    <rect x="30" y="600" width="1220" height="220" rx="14" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <rect x="30" y="600" width="240" height="30" rx="14" fill="#d97706"/>
+    <text x="50" y="621" font-size="13" font-weight="700" fill="#ffffff">PHASE 3 — Kubelet picks it up</text>
+
+    <!-- Step 10: kubelet -->
+    <rect x="50" y="650" width="220" height="150" rx="8" fill="#ffffff" stroke="#d97706"/>
+    <circle cx="68" cy="668" r="11" fill="#d97706"/>
+    <text x="68" y="672" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">10</text>
+    <text x="90" y="672" font-size="12" font-weight="700" fill="#78350f">Kubelet sees pod</text>
+    <text x="60" y="694" font-size="10" fill="#334155">Watching pods bound</text>
+    <text x="60" y="708" font-size="10" fill="#334155">to its own nodeName.</text>
+    <text x="60" y="728" font-size="10" fill="#334155">Starts reconcile loop.</text>
+
+    <!-- Step 11: Sandbox -->
+    <rect x="290" y="650" width="220" height="150" rx="8" fill="#ffffff" stroke="#d97706"/>
+    <circle cx="308" cy="668" r="11" fill="#d97706"/>
+    <text x="308" y="672" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">11</text>
+    <text x="330" y="672" font-size="12" font-weight="700" fill="#78350f">Pod sandbox</text>
+    <text x="300" y="694" font-size="10" fill="#334155">via CRI → containerd</text>
+    <text x="300" y="708" font-size="10" fill="#334155">/ CRI-O</text>
+    <text x="300" y="728" font-size="10" fill="#334155">Creates pause container</text>
+    <text x="300" y="742" font-size="10" fill="#334155">holding netns +</text>
+    <text x="300" y="756" font-size="10" fill="#334155">shared namespaces</text>
+
+    <!-- Step 12: CNI -->
+    <rect x="530" y="650" width="220" height="150" rx="8" fill="#ffffff" stroke="#d97706"/>
+    <circle cx="548" cy="668" r="11" fill="#d97706"/>
+    <text x="548" y="672" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">12</text>
+    <text x="570" y="672" font-size="12" font-weight="700" fill="#78350f">CNI networking</text>
+    <text x="540" y="694" font-size="10" fill="#334155">Calico / Cilium / etc.</text>
+    <text x="540" y="714" font-size="10" fill="#334155">• allocate pod IP</text>
+    <text x="540" y="728" font-size="10" fill="#334155">• create veth pair</text>
+    <text x="540" y="742" font-size="10" fill="#334155">• wire up netns</text>
+    <text x="540" y="762" font-size="9" fill="#64748b" font-style="italic">pod IP exists now</text>
+
+    <!-- Step 13: Volumes -->
+    <rect x="770" y="650" width="220" height="150" rx="8" fill="#ffffff" stroke="#d97706"/>
+    <circle cx="788" cy="668" r="11" fill="#d97706"/>
+    <text x="788" y="672" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">13</text>
+    <text x="810" y="672" font-size="12" font-weight="700" fill="#78350f">Mount volumes</text>
+    <text x="780" y="694" font-size="10" fill="#334155">Volume manager:</text>
+    <text x="780" y="708" font-size="10" fill="#334155">• PVC via CSI</text>
+    <text x="780" y="722" font-size="10" fill="#334155">  (Attach + Publish)</text>
+    <text x="780" y="736" font-size="10" fill="#334155">• ConfigMap / Secret</text>
+    <text x="780" y="750" font-size="10" fill="#334155">• projected SA token</text>
+    <text x="780" y="764" font-size="10" fill="#334155">• emptyDir</text>
+
+    <!-- Step 14: Image pull -->
+    <rect x="1010" y="650" width="220" height="150" rx="8" fill="#ffffff" stroke="#d97706"/>
+    <circle cx="1028" cy="668" r="11" fill="#d97706"/>
+    <text x="1028" y="672" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">14</text>
+    <text x="1050" y="672" font-size="12" font-weight="700" fill="#78350f">Image pull</text>
+    <text x="1020" y="694" font-size="10" fill="#334155">Per imagePullPolicy,</text>
+    <text x="1020" y="708" font-size="10" fill="#334155">using imagePullSecrets.</text>
+    <text x="1020" y="728" font-size="10" fill="#334155">Container state:</text>
+    <text x="1020" y="742" font-size="10" font-family="monospace" fill="#1e293b">Waiting</text>
+    <text x="1020" y="756" font-size="10" font-family="monospace" fill="#1e293b">ContainerCreating</text>
+    <text x="1020" y="775" font-size="9" fill="#991b1b" font-style="italic">(or ErrImagePull on failure)</text>
+
+    <line x1="270" y1="725" x2="290" y2="725" stroke="#d97706" stroke-width="1.5" marker-end="url(#arrow-amber)"/>
+    <line x1="510" y1="725" x2="530" y2="725" stroke="#d97706" stroke-width="1.5" marker-end="url(#arrow-amber)"/>
+    <line x1="750" y1="725" x2="770" y2="725" stroke="#d97706" stroke-width="1.5" marker-end="url(#arrow-amber)"/>
+    <line x1="990" y1="725" x2="1010" y2="725" stroke="#d97706" stroke-width="1.5" marker-end="url(#arrow-amber)"/>
+  </g>
+
+  <!-- Phase 3 -> Phase 4 -->
+  <line x1="640" y1="820" x2="640" y2="850" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="650" y="840" font-size="10" fill="#475569" font-style="italic">images present, sandbox ready</text>
+
+  <!-- ============================================ -->
+  <!-- PHASE 4: Container start                      -->
+  <!-- ============================================ -->
+  <g>
+    <rect x="30" y="860" width="1220" height="200" rx="14" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <rect x="30" y="860" width="220" height="30" rx="14" fill="#16a34a"/>
+    <text x="50" y="881" font-size="13" font-weight="700" fill="#ffffff">PHASE 4 — Container start</text>
+
+    <!-- Step 15: Init containers -->
+    <rect x="50" y="910" width="280" height="130" rx="8" fill="#ffffff" stroke="#16a34a"/>
+    <circle cx="68" cy="928" r="11" fill="#16a34a"/>
+    <text x="68" y="932" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">15</text>
+    <text x="90" y="932" font-size="12" font-weight="700" fill="#14532d">Init containers (sequential)</text>
+    <text x="60" y="954" font-size="10" fill="#334155">Each must exit 0 before next.</text>
+    <text x="60" y="974" font-size="10" fill="#334155">Pod stays Pending throughout.</text>
+    <text x="60" y="994" font-size="10" fill="#334155">App container reason:</text>
+    <text x="60" y="1008" font-size="10" font-family="monospace" fill="#1e293b">PodInitializing</text>
+
+    <!-- Step 16: Main containers -->
+    <rect x="350" y="910" width="280" height="130" rx="8" fill="#ffffff" stroke="#16a34a"/>
+    <circle cx="368" cy="928" r="11" fill="#16a34a"/>
+    <text x="368" y="932" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">16</text>
+    <text x="390" y="932" font-size="12" font-weight="700" fill="#14532d">Main containers (parallel)</text>
+    <text x="360" y="954" font-size="10" fill="#334155">CRI: CreateContainer →</text>
+    <text x="360" y="968" font-size="10" fill="#334155">StartContainer for each.</text>
+    <text x="360" y="988" font-size="10" fill="#334155">Entrypoint runs as PID 1.</text>
+    <text x="360" y="1008" font-size="10" fill="#334155">postStart hooks fire here.</text>
+    <text x="360" y="1024" font-size="9" fill="#64748b" font-style="italic">blocks "started" until they return</text>
+
+    <!-- Step 17: Startup probe -->
+    <rect x="650" y="910" width="280" height="130" rx="8" fill="#ffffff" stroke="#16a34a"/>
+    <circle cx="668" cy="928" r="11" fill="#16a34a"/>
+    <text x="668" y="932" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">17</text>
+    <text x="690" y="932" font-size="12" font-weight="700" fill="#14532d">Startup probe</text>
+    <text x="660" y="954" font-size="10" fill="#334155">(if defined)</text>
+    <text x="660" y="974" font-size="10" fill="#334155">Protects slow-starting apps</text>
+    <text x="660" y="988" font-size="10" fill="#334155">from liveness probe killing.</text>
+    <text x="660" y="1008" font-size="10" fill="#334155">Must pass before container</text>
+    <text x="660" y="1022" font-size="10" fill="#334155">is considered "Started".</text>
+
+    <!-- Step 18: Liveness/readiness -->
+    <rect x="950" y="910" width="280" height="130" rx="8" fill="#ffffff" stroke="#16a34a"/>
+    <circle cx="968" cy="928" r="11" fill="#16a34a"/>
+    <text x="968" y="932" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">18</text>
+    <text x="990" y="932" font-size="12" font-weight="700" fill="#14532d">Liveness + readiness</text>
+    <text x="960" y="954" font-size="10" fill="#334155">Begin once startup probe</text>
+    <text x="960" y="968" font-size="10" fill="#334155">passes (or immediately if</text>
+    <text x="960" y="982" font-size="10" fill="#334155">none defined).</text>
+    <text x="960" y="1002" font-size="10" fill="#334155">Liveness → restart on fail</text>
+    <text x="960" y="1018" font-size="10" fill="#334155">Readiness → route traffic</text>
+
+    <line x1="330" y1="975" x2="350" y2="975" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+    <line x1="630" y1="975" x2="650" y2="975" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+    <line x1="930" y1="975" x2="950" y2="975" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+  </g>
+
+  <!-- Phase 4 -> Phase 5 -->
+  <line x1="640" y1="1060" x2="640" y2="1090" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="650" y="1080" font-size="10" fill="#475569" font-style="italic">at least one container running</text>
+
+  <!-- ============================================ -->
+  <!-- PHASE 5: Pod is Running                       -->
+  <!-- ============================================ -->
+  <g>
+    <rect x="30" y="1100" width="1220" height="220" rx="14" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+    <rect x="30" y="1100" width="240" height="30" rx="14" fill="#0284c7"/>
+    <text x="50" y="1121" font-size="13" font-weight="700" fill="#ffffff">PHASE 5 — Pod is Running</text>
+
+    <!-- Step 19: Status update -->
+    <rect x="50" y="1150" width="370" height="150" rx="8" fill="#ffffff" stroke="#0284c7"/>
+    <circle cx="68" cy="1168" r="11" fill="#0284c7"/>
+    <text x="68" y="1172" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">19</text>
+    <text x="90" y="1172" font-size="12" font-weight="700" fill="#075985">kubelet updates status</text>
+    <text x="60" y="1196" font-size="10" font-family="monospace" fill="#1e293b">status.phase: Running</text>
+    <text x="60" y="1212" font-size="10" font-family="monospace" fill="#1e293b">status.podIP: 10.x.x.x</text>
+    <text x="60" y="1228" font-size="10" font-family="monospace" fill="#1e293b">status.hostIP: &lt;node IP&gt;</text>
+    <text x="60" y="1252" font-size="10" fill="#334155">Conditions populated:</text>
+    <text x="60" y="1268" font-size="10" fill="#334155">PodScheduled, Initialized,</text>
+    <text x="60" y="1284" font-size="10" fill="#334155">ContainersReady, Ready</text>
+
+    <!-- Step 20: Readiness -->
+    <rect x="440" y="1150" width="370" height="150" rx="8" fill="#ffffff" stroke="#0284c7"/>
+    <circle cx="458" cy="1168" r="11" fill="#0284c7"/>
+    <text x="458" y="1172" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">20</text>
+    <text x="480" y="1172" font-size="12" font-weight="700" fill="#075985">Readiness flips → Service endpoints</text>
+    <text x="450" y="1196" font-size="10" fill="#334155">Readiness probe succeeds →</text>
+    <text x="450" y="1212" font-size="10" font-family="monospace" fill="#1e293b">Ready: True</text>
+    <text x="450" y="1234" font-size="10" fill="#334155">EndpointSlice controller adds</text>
+    <text x="450" y="1248" font-size="10" fill="#334155">pod IP to matching Services.</text>
+    <text x="450" y="1270" font-size="10" font-weight="600" fill="#075985">Traffic starts flowing 🎉</text>
+
+    <!-- Step 21: Steady state -->
+    <rect x="830" y="1150" width="400" height="150" rx="8" fill="#ffffff" stroke="#0284c7"/>
+    <circle cx="848" cy="1168" r="11" fill="#0284c7"/>
+    <text x="848" y="1172" text-anchor="middle" font-size="11" font-weight="700" fill="#ffffff">21</text>
+    <text x="870" y="1172" font-size="12" font-weight="700" fill="#075985">Steady state</text>
+    <text x="840" y="1194" font-size="10" fill="#334155">• kubelet keeps probing</text>
+    <text x="840" y="1210" font-size="10" fill="#334155">• runtime keeps process alive</text>
+    <text x="840" y="1226" font-size="10" fill="#334155">• status updates posted</text>
+    <text x="840" y="1242" font-size="10" fill="#334155">  to API server periodically</text>
+    <text x="840" y="1266" font-size="10" fill="#334155" font-style="italic">If anything fails →</text>
+    <text x="840" y="1282" font-size="10" fill="#334155" font-style="italic">CrashLoopBackOff, restart, etc.</text>
+
+    <line x1="420" y1="1225" x2="440" y2="1225" stroke="#0284c7" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+    <line x1="810" y1="1225" x2="830" y2="1225" stroke="#0284c7" stroke-width="1.5" marker-end="url(#arrow-blue)"/>
+  </g>
+
+  <!-- Bottom note -->
+  <g>
+    <rect x="30" y="1340" width="1220" height="50" rx="8" fill="#f8fafc" stroke="#cbd5e1"/>
+    <text x="640" y="1361" text-anchor="middle" font-size="11" font-weight="600" fill="#334155">Key insight: every step after #5 is reconciliation against etcd via watch streams — no polling, no direct etcd access from scheduler/kubelet.</text>
+    <text x="640" y="1378" text-anchor="middle" font-size="10" fill="#64748b" font-style="italic">Only the API server talks to etcd. Everything else watches the API server.</text>
+  </g>
+</svg>
