@@ -1,0 +1,20 @@
+# golf.yaml
+# Pod that never gets scheduled. Hint: `kubectl describe` shows scheduler events.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: golf
+spec:
+  restartPolicy: Always
+  nodeSelector:
+    disktype: nvme-ultra
+  containers:
+    - name: app
+      image: nginx:1.27-alpine
+      resources:
+        requests:
+          cpu: "50m"
+          memory: "32Mi"
+        limits:
+          cpu: "100m"
+          memory: "64Mi"

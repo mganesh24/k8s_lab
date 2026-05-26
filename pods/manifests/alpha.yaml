@@ -1,0 +1,36 @@
+# alpha.yaml
+# A standalone Pod (no controller) plus a NodePort Service for external access.
+# No persistent storage.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: alpha
+  labels:
+    app: alpha
+spec:
+  restartPolicy: Always
+  containers:
+    - name: web
+      image: nginx:1.27-alpine
+      ports:
+        - containerPort: 80
+      resources:
+        requests:
+          cpu: "50m"
+          memory: "64Mi"
+        limits:
+          cpu: "200m"
+          memory: "128Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: alpha-svc
+spec:
+  type: NodePort
+  selector:
+    app: alpha
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30080

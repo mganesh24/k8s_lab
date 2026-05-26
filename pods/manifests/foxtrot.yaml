@@ -1,0 +1,21 @@
+# foxtrot.yaml
+# Pod that gets killed shortly after starting. Inspect describe output
+# carefully — the "Last State" tells the story.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: foxtrot
+spec:
+  restartPolicy: Always
+  containers:
+    - name: app
+      image: polinux/stress:latest
+      command: ["stress"]
+      args: ["--vm", "1", "--vm-bytes", "150M", "--vm-hang", "1"]
+      resources:
+        requests:
+          cpu: "50m"
+          memory: "32Mi"
+        limits:
+          cpu: "200m"
+          memory: "64Mi"

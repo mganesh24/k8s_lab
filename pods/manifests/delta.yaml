@@ -1,0 +1,18 @@
+# delta.yaml
+# Pod that will not start. Inspect events and status to find out why.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: delta
+spec:
+  restartPolicy: Always
+  containers:
+    - name: app
+      image: nginx:thisversiondoesnotexist
+      resources:
+        requests:
+          cpu: "50m"
+          memory: "32Mi"
+        limits:
+          cpu: "100m"
+          memory: "64Mi"

@@ -1,0 +1,39 @@
+# charlie.yaml
+# A Deployment that owns its Pod via a ReplicaSet.
+# Delete the pod and it will be recreated automatically.
+# This Deployment lives in a non-default namespace so the pod
+# does not appear in `kubectl get pods` without specifying the namespace.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: workshop
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: charlie
+  namespace: workshop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: charlie
+  template:
+    metadata:
+      labels:
+        app: charlie
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: app
+          image: hashicorp/http-echo:1.0
+          args: ["-text=hello from charlie"]
+          ports:
+            - containerPort: 5678
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "32Mi"
+            limits:
+              cpu: "200m"
+              memory: "64Mi"

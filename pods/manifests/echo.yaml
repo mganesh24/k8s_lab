@@ -1,0 +1,22 @@
+# echo.yaml
+# Pod that keeps restarting. Use logs and status to find the failure.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: echo
+spec:
+  restartPolicy: Always
+  containers:
+    - name: app
+      image: busybox:1.36
+      command:
+        - sh
+        - -c
+        - "echo 'starting up...'; sleep 2; echo 'fatal: configuration missing' >&2; exit 1"
+      resources:
+        requests:
+          cpu: "25m"
+          memory: "16Mi"
+        limits:
+          cpu: "100m"
+          memory: "32Mi"
