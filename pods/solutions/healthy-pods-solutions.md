@@ -1,8 +1,6 @@
 # Healthy Pods — Solutions
 
-Each answer has the command to run and a one or two line explanation. If you're following along without doing the tasks first, that's fine — read the question, run the command, read the explanation, move on.
-
-> **Before you start:** make sure you applied the three manifests:
+> **Before you start:** make sure you have applied the three manifests:
 > ```bash
 > kubectl apply -f manifests/alpha.yaml
 > kubectl apply -f manifests/bravo.yaml
@@ -15,7 +13,7 @@ Each answer has the command to run and a one or two line explanation. If you're 
 
 ### 1. Imperative or declarative?
 
-**Declarative.** You wrote a YAML file describing the desired state and applied it with `kubectl apply -f`. Imperative would be `kubectl run alpha --image=nginx` — no file, no source of truth.
+**Declarative.** You wrote a YAML file describing the desired state and applied it with `kubectl apply -f`. Imperative would be `kubectl run alpha --image=nginx`
 
 ### 2. Which node is the pod running on?
 
