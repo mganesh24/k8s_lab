@@ -51,11 +51,3 @@ Answer the six questions above. Hint: this pod's problem happens before any cont
 
 ---
 
-## After you're done
-
-For each pod, write down (in one sentence each):
-- The failure category (image, runtime, resource, scheduling, config, networking, …)
-- The single line in the YAML that caused it
-- The command that gave you the clearest signal
-
-That table is the actual deliverable from this lab.
