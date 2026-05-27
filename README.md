@@ -16,8 +16,10 @@ The intention of this repository is to:
 
 Resources will be grouped into suitable directories based on their purpose or topic. Examples include:
 
-```lab_setup_steps
+```
+lab_setup_steps
 pods/
 study_resources/
 notes/
 examples/
+```
