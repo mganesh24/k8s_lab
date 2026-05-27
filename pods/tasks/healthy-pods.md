@@ -17,14 +17,13 @@ kubectl apply -f manifests/alpha.yaml
 3. What image is the container using?
 4. What is the pod IP address?
 5. Can the pod reach the internet?
-6. Is the pod accessible from the external world? If yes, how?
+6. Is the pod accessible from the external world?
 7. When was the pod created?
 8. What phase is the pod currently in?
-9. Which Kubernetes resource owns this pod? Is it managed by a Deployment, ReplicaSet, Job, or StatefulSet?
-10. What happens if you delete the pod manually?
-11. What is the pod's restart policy?
-12. Has the container restarted before? How many times?
-13. Does the pod have CPU and memory requests and limits? What are they?
+9. Which resource own's this pod?
+10. What is the pod's restart policy?
+11. Has the container restarted before? How many times?
+12. Does the pod have CPU and memory requests and limits? What are they?
 
 ---
 
@@ -54,4 +53,3 @@ kubectl apply -f manifests/charlie.yaml
 2. Which Kubernetes resource is the direct owner of this pod?
 3. Is the pod managed by a Deployment, ReplicaSet, Job, or StatefulSet?
 4. Delete the pod. What happens? Why?
-5. Now scale the owning resource to zero. Does the pod come back this time?
