@@ -29,6 +29,7 @@ You may also briefly see `ErrImagePull` before it backs off.
 
 ### Failure reason
 
+
 ```bash
 kubectl describe pod delta
 ```
@@ -40,7 +41,7 @@ Failed to pull image "nginx:thisversiondoesnotexist": ... manifest unknown
 Error: ErrImagePull
 Back-off pulling image "nginx:thisversiondoesnotexist"
 ```
-
+The docker registry doesn't have an image named `nginx:thisversiondoesnotexist` , which is referred in delta.yaml manifest used to create this pod.
 ### Warnings or errors
 
 All in the events section of `describe`. The `Type` column will say `Warning`.
@@ -69,7 +70,7 @@ Nothing — kubelet keeps retrying with exponential backoff. The status alternat
 | Root cause | The image tag `nginx:thisversiondoesnotexist` does not exist on Docker Hub |
 | Fix | Change the tag to a real one, e.g. `nginx:1.27-alpine` |
 
-> **Lesson:** `ImagePullBackOff` is almost always a typo in the image name, a missing tag, or a private registry without imagePullSecrets. Look at the `Events` first.
+> **Takeaway:** `ImagePullBackOff` is almost always a typo in the image name, a missing tag, or a private registry without imagePullSecrets. Look at the `Events` first.
 
 ---
 
@@ -121,7 +122,7 @@ starting up...
 fatal: configuration missing
 ```
 
-There it is. The app is telling you exactly what's wrong.
+The logs from the app tells what's wrong.
 
 If the pod has already restarted and you want the previous run's logs:
 
@@ -141,7 +142,7 @@ The restart count goes up, and the backoff delay between restarts increases (10s
 | Root cause | The container's command intentionally exits 1 after 2 seconds |
 | Fix | Fix the application, or provide whatever configuration it's looking for |
 
-> **Lesson:** `CrashLoopBackOff` means the container started and then died. The fix is almost always in the logs (or in `--previous` if the current attempt hasn't finished yet).
+> **Takeaway:** `CrashLoopBackOff` means the container started and then died. The fix is almost always in the logs (or in `--previous` if the current attempt hasn't finished yet).
 
 ---
 
@@ -153,7 +154,7 @@ The restart count goes up, and the backoff delay between restarts increases (10s
 kubectl get pod foxtrot
 ```
 
-You'll see `Running` briefly, then `OOMKilled`, then `CrashLoopBackOff` after a few restarts:
+You'll see `Running` briefly, then `OOMKilled`, then `CrashLoopBackOff` after a few automatic restarts:
 
 ```
 NAME      READY   STATUS             RESTARTS   AGE
@@ -178,7 +179,7 @@ Exit code 137 = killed by SIGKILL (128 + signal 9). Combined with `Reason: OOMKi
 
 ### Warnings or errors
 
-`describe` events show `Back-off restarting failed container`. The OOMKill signal itself is in the container's `Last State`, not in pod events.
+`kubectl describe` events show `Back-off restarting failed container`. The OOMKill signal itself is in the container's `Last State`, not in pod events.
 
 ### Application logs
 
@@ -200,7 +201,7 @@ Same outcome every time. Each restart hits the memory limit again and gets kille
 | Root cause | Container tries to allocate ~150 MB but the limit is 64 Mi |
 | Fix | Either raise `resources.limits.memory` to e.g. `256Mi`, or reduce what the app allocates |
 
-> **Lesson:** `Reason: OOMKilled` and exit code `137` together = memory limit too low (or memory leak). For CPU, exceeding the limit doesn't kill the container — it throttles it.
+> **Takeaway:** `Reason: OOMKilled` and exit code `137` together = memory limit too low (or memory leak). For CPU, exceeding the limit doesn't kill the container — it throttles it.
 
 ---
 
@@ -217,7 +218,7 @@ NAME   READY   STATUS    RESTARTS   AGE
 golf   0/1     Pending   0          1m
 ```
 
-`Pending` and never moving. This is a different family of failure entirely — the pod hasn't been scheduled to any node, so the container hasn't even been created.
+`Pending` and never moving. This is a different kind of failure  — the pod hasn't been scheduled to any node, so the container hasn't even been created.
 
 ### Failure reason
 
@@ -269,7 +270,7 @@ You can check what labels your nodes actually have:
 kubectl get nodes --show-labels
 ```
 
-> **Lesson:** `Pending` for more than a few seconds is a scheduler problem, not an app problem. The scheduler always tells you why in `kubectl describe`. Other common causes: insufficient CPU/memory across the cluster, taints without matching tolerations, PVC binding failures.
+> **Takeaway:** `Pending` for more than a few seconds is a scheduler problem, not an app problem. The scheduler always tells you why in `kubectl describe`. Other common causes: insufficient CPU/memory across the cluster, taints without matching tolerations, PVC binding failures.
 
 ---
 
