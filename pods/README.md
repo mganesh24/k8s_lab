@@ -92,26 +92,6 @@ cd k8s_lab/pods
 
 ---
 
-## Applying the manifests
-
-Apply them one at a time so you can observe what each one does. Don't apply them all at once on the first pass.
-
-```bash
-kubectl apply -f manifests/alpha.yaml
-```
-
-Then watch the pod come up:
-
-```bash
-kubectl get pods -w
-```
-
-Press `Ctrl+C` once it's `Running` (or once it's clearly stuck for the broken ones).
-
-**Tip:** one of the manifests creates resources in a non-default namespace. If a pod doesn't show up with `kubectl get pods`, try `kubectl get pods -A`.
-
----
-
 ## Suggested workflow
 
 1. **Healthy pods first.** Apply `alpha.yaml`, `bravo.yaml`, `charlie.yaml` one by one. Open `tasks/healthy-pods.md` and answer the questions for each pod. Use `solutions/healthy-pods-solutions.md` when you get stuck.
