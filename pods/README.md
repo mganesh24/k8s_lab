@@ -82,16 +82,9 @@ kubectl get storageclass
 
 ---
 
-## Getting the lab onto your machine
+## Getting the lab repo onto your machine
 
-1. Install `git`
-```bash
-sudo apt update
-sudo apt install -y git
-git --version
-```
-
-2. Clone the training repo
+Clone the training repo
 ```bash
 git clone https://github.com/mganesh24/k8s_lab
 cd k8s_lab/pods
