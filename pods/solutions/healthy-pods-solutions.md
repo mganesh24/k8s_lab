@@ -38,7 +38,7 @@ Or more precisely:
 kubectl get pod alpha -o jsonpath='{.spec.containers[*].image}'
 ```
 
-`nginx:1.27-alpine`. The image is what the container runtime pulls and runs.
+The image is what the container runtime pulls and runs.
 
 ### 4. What is the pod IP address?
 
